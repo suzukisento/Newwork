@@ -52,7 +52,7 @@ mybatis:
  configuration:
   # 控制台输出执行sql
   log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
+## 注释内容来自于gitee
 
 
 
