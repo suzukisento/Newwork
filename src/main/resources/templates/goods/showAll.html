@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{/webjars/jquery/3.2.1/dist/jquery.min.js}">
+    </script>
+    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}">
+    </script>
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container">
+    <table class="table table-striped">
+        <tr>
+            <th>序号</th>
+            <th>商品图片</th>
+            <th>商品名称</th>
+            <th>商品价格</th>
+            <th>商品数量</th>
+        </tr>
+        <tr th:each="goods, status : ${goodsList}">
+            <td th:text="${status.count}"></td>
+            <td>
+<span th:if="${goods.goodsImg eq null}">
+<img width="100px" height="100px"
+     th:src="@{/tmp/wsc.jpg}" alt=""/>
+</span>
+                <span th:unless="${goods.goodsImg eq null}">
+<img width="100px" height="100px"
+     th:src="@{${goods.goodsImg}}" alt=""/>
+</span>
+            </td>
+            <td th:text="${goods.goodsName}"></td>
+            <td th:text="${goods.goodsPrice}"></td>
+            <td th:text="${goods.goodsNum}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

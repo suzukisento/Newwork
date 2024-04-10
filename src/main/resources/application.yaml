@@ -1,0 +1,64 @@
+#jdbc:
+#  driverClassName: com.mysql.jdbc.Driver
+#  url: jdbc:mysql://localhost:3306/springboot1?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Chongqing
+#  username: root
+#  password: 12345678
+
+page:
+  size: 5
+
+logging:
+  level:
+    com.as.controller: info
+server:
+  port: 8080
+  servlet:
+    context-path: /springboot2
+spring:
+  mvc:
+    static-path-pattern: /static/**
+  thymeleaf:
+    cache: false
+    mode: html5
+    encoding: utf-8
+    prefix: classpath:/templates/
+    suffix: .html
+  servlet:
+    multipart:
+      max-file-size: 100000000000
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springboot1?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Chongqing
+    username: root
+    password: 12345678
+    type: com.zaxxer.hikari.HikariDataSource
+  redis:
+    host: localhost
+    port: 6379
+    password: 123456
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    virtual-host: testhost
+    username: admin
+    password: admin
+
+# mybatis配置
+mybatis:
+# # 实体类别名包路径
+# type-aliases-package: com.as.domain
+# # 映射文件路径
+# mapper-locations: classpath:mybatis/**/*.xml
+ configuration:
+  # 控制台输出执行sql
+  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
+
+
+
+
+
+
+

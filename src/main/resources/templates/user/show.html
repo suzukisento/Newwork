@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en"  xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+修改后显示
+
+<p th:text="${user.name}"></p>
+
+<hr>
+
+选择表达式
+<div th:object="${user}">
+    <p>
+        名字：<span th:text="*{name}"></span>
+        年龄：<span th:text="*{age}"></span>
+        <br>
+        ------分支---------
+        <br>
+        性别：<input type="radio" th:field="*{sex}" value="1"> 男
+        <input type="radio" th:field="*{sex}" value="2">女
+
+
+    </p>
+    <br>
+    <br>
+
+    <p th:if="${user.sex} == 1">男</p>
+    <p th:if="${user.sex} == 2">女</p>
+</div>
+
+<hr>
+遍历表达式
+<p th:each="obj,statu:${list}">
+    <span th:text="${statu.count}"></span><span th:text="${obj}"></span> <br>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+

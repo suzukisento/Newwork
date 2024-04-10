@@ -1,0 +1,65 @@
+<!-- showByPage页面 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>分页结果集</title>
+    <script th:src="@{/webjars/jquery/3.2.1/dist/jquery.min.js}">
+    </script>
+    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}">
+    </script>
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
+    <link rel="shortcut icon" th:href="@{/static/favicon.ico}"/>
+</head>
+<body>
+<div class="container">
+    <div style="height: 120px">
+    </div>
+    <table class="table table-striped">
+        <tr>
+            <th>序号</th>
+            <th>商品图片</th>
+            <th>商品名称</th>
+            <th>商品价格</th>
+            <th>商品数量</th>
+        </tr>
+        <tr th:each="goods, status : ${pageInfo.getList()}">
+            <td th:text="${status.count}"></td>
+            <!-- 相关代码 -->
+            <td>
+<span th:if="${goods.goodsImg eq null}">
+<a th:href="@{/goods/showOne/{goodsId}(goodsId=${goods.goodsId})}">
+<img th:src="@{/tmp/wsc.jpg}"/>
+</a>
+</span><span th:unless="${goods.goodsImg eq null}">
+<a th:href="@{/goods/showOne/{goodsId}(goodsId=${goods.goodsId})}">
+<img width="100px" height="100px" th:src="@{${goods.goodsImg}}"/>
+</a>
+</span>
+            </td>
+            <td th:text="${goods.goodsName}"></td>
+            <td th:text="${goods.goodsPrice}"></td>
+            <td th:text="${goods.goodsNum}"></td>
+
+        </tr>
+    </table>
+    <div style="width: 25%; margin: 10px auto; ">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" th:href="@{/goods/showPage/1}">首页</a></li>
+            <li class="page-item"><a class="page-link"
+                                     th:href="@{'/goods/showPage/' + ${pageInfo.getPrePage()}}">上一页</a>
+            </li>
+            <li class="page-item" th:if="${pageInfo.getPages() le pageInfo.getPageNum()}">
+                <a class="page-link" th:href="@{'/goods/showPage/'+ ${pageInfo.getPages()}}">下一页</a>
+            </li>
+            <li class="page-item" th:if="${pageInfo.getPages() gt pageInfo.getPageNum()}">
+                <a class="page-link" th:href="@{'/goods/showPage/'+ ${pageInfo.getNextPage()}}">下一页</a>
+            </li>
+            <li class="page-item"><a class="page-link" th:href="@{'/goods/showPage/' + ${pageInfo.getPages()}}">尾页</a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

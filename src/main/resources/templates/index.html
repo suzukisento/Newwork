@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Thymeleaf learn</title>
+    <script th:src="@{/webjars/jquery/3.2.1/dist/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/static/css/style.css}">
+</head>
+<body>
+<h1>hello, thymeleaf</h1>
+<img id="img1" alt="看到我说明图片挂了" th:src="@{/static/imgs/a.png}"
+     title="帅哥一枚"
+     width="10%" height="10%" class="rounded-circle">
+<button id="btn1" class="btn btn-info">Click Me!</button>
+<div id="div1"></div>
+<script type="text/javascript">
+    $("#btn1").click(function(){
+        $("#img1").attr({"src":"[[@{/}]]/static/imgs/girl.png", "title":"小姐姐一名"});
+            let val = $("#div1").html();
+        if(val.length == 0)
+            $("#div1").html("被点出来了...").css({"color":"silver", "fontsize": "24px"});
+        else if(val != '')
+            $("#div1").html("");
+    });
+</script>
+
+
+<hr>
+<h2>文件上传</h2>
+<form th:action="@{/file/upload}" method="post" enctype="multipart/form-data">
+    文件：<input type="file" name="myFile" /><br />
+    <input type="submit" value="上传" />
+</form>
+</body>
+</html>
+

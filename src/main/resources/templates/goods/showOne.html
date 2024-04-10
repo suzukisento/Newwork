@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情页</title>
+    <script th:src="@{/webjars/jquery/3.2.1/dist/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}">
+    </script>
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
+    <link rel="shortcut icon" th:href="@{/static/favicon.ico}" />
+    <style type="text/css">
+        body{
+            background-color: bisque;
+        }
+        dl dd{
+            margin-left: 130px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div style="height: 120px"></div>
+    <dl style="margin-left: 200px">
+        <dt>
+<span th:if="${goods.goodsImg eq null}">
+<img th:src="@{/tmp/wsc.jpg}" />
+</span>
+            <span th:unless="${goods.goodsImg eq null}">
+<img th:src="@{${goods.goodsImg}}" />
+</span>
+        </dt>
+        <dd th:text="'商品名称：' + ${goods.goodsName}"></dd>
+        <dd text="商品价格："><span id="unitPrice"
+                               th:text="${goods.goodsPrice}"></span></dd>
+        <dd th:text="'剩余数量：' + ${goods.goodsNum}"></dd>
+        <dd>
+            <button id="payBtn" class="btn btn-primary">选择购买数量
+            </button>
+        </dd>
+    </dl>
+    <script>
+        $(function(){
+            $("#payBtn").click(function(){
+                $("#payInfo").toggle(function(){});
+            });
+            $("#payMoney").change(function (){
+                let selectQuantity = $(this).val();
+                console.log("选择的数量是：" + selectQuantity);
+                let unitPrice = $("#unitPrice").html();
+                console.log("单价是：" + unitPrice);
+                let totalPrice = parseInt(selectQuantity) *
+                    parseInt(unitPrice);
+                console.log("总价是：" + totalPrice);
+                $("#showMoney").html(selectQuantity);
+                $("#totalPrice").val(totalPrice);
+            });
+        })
+    </script>
+    <div id="payInfo" style="display: none; width:50%; margin: 50px 0 0
+200px; padding-left: 100px;">
+        <form th:action="@{/goods/pay}" method="post">
+            <input type="hidden" name="name"
+                   th:value="${goods.goodsName}" />
+            <table>
+                <tr>
+                    <th>购买数量</th>
+                    <td>
+                        <input id="payMoney" type="number" min="0"
+                               th:default="${goods.goodsNum/2}" th:max="${goods.goodsNum}" />
+                        <span style="margin-left: 16px; font: bolder
+20px/40px Serif;" id="showMoney" th:text="${goods.goodsNum/2}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>总价：</th>
+                    <td>
+                        <input id="totalPrice" class="form-control"
+                               name="totalPrice" placeholder="总计金额" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input class="btn btn-outline-info"
+                               type="submit" value="点击购买" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

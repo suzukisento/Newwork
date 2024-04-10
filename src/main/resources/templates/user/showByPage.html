@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>分页结果集</title>
+    <title>用户列表展示页</title>
+    <script th:src="@{/webjars/jquery/3.2.1/dist/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/style.css}" />
+    <style type="text/css">
+        #user-table{
+            width: 100%;
+        }
+        #user-table th, tr{
+            height: 36px;
+        }
+        #page-input{
+            border-style: dotted;
+            border-radius: 10%;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+        }
+        #page-div {
+            width: 60%;
+            margin: 10px auto;
+        }
+        </style>
+        </head>
+<body>
+<div class="container">
+    <a style="display: inline-block; margin: 10px 0px" th:href="@{/toinsert}" class="btn-info">新添用户</a>
+    <table id="user-table" class="table-striped">
+        <tr>
+            <th>No.</th>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>性别</th>
+            <th>生日</th>
+            <th>备注</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="user, statu : ${pageInfo.list}">
+            <td th:text="${statu.count}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.age}"></td>
+            <td>
+                <span th:if="${user.sex == 1}">男</span>
+                <span th:if="${user.sex == 2}">女</span>
+            </td>
+            <td th:text="${user.birthday eq null} ? '保密' :
+${#dates.format(user.birthday, 'yyyy-MM-dd')}"></td>
+            <td th:text="${user.note}"></td>
+            <td>
+                <!--<a th:href="@{/user/delete/{id}(id=${user.id})}">删
+        除</a>-->
+                <a href="javascript:void(0)"
+                   th:onclick="|deleteById(${user.id},'${user.id}')|">删除</a>
+                <a th:href="@{/toupdate/{id}(id=${user.id})}">修改
+                </a>
+            </td>
+        </tr>
+    </table>
+    <div id="page-div">
+<span>
+<a th:href="@{/queryByPage/1}">首页</a>
+<a th:href="@{/queryByPage/{curPage}(curPage=${pageInfo.getPageNum() - 1})}">上一页</a>
+<a th:href="@{/queryByPage/{curPage}(curPage=${pageInfo.getPageNum() ==pageInfo.getPages() ? pageInfo.getPages() :pageInfo.getPageNum() + 1})}">下一页</a>
+<a th:href="@{/queryByPage/{curPage}(curPage=${pageInfo.getPages()})}">尾页</a>
+</span>&nbsp;&nbsp;
+        <span>
+            <label>当前第&nbsp;</label><em th:text="${pageInfo.getPageNum()}"></em><label>&nbsp;页,</label>
+<label>共&nbsp;</label><em th:text="${pageInfo.getPages()}"></em><label>&nbsp;页</label>
+<label>&nbsp;&nbsp;跳转到第&nbsp;</label><input id="page-input" /><label>&nbsp;页</label>
+<a href="javascript:void(0)" th:onclick="toPage()">跳转</a>
+</span>
+    </div>
+</div>
+<script th:inline="javascript">
+    function toPage() {
+        let pageNum = document.getElementById("page-input").value;
+        if(pageNum > [[${pageInfo.getPages()}]])
+            pageNum = [[${pageInfo.getPages()}]];
+        /*<![CDATA[*/
+        let toPageHref = /*[[@{/queryByPage/{curPage}(curPage=*/"" + pageNum + /*)}]]*/"";
+        /*]]>*/
+        location.href = toPageHref;
+    }
+</script>
+</body>
