@@ -11,7 +11,7 @@ logging:
   level:
     com.as.controller: info
 server:
-  port: 8080
+  port: 80
   servlet:
     context-path: /springboot2
 spring:
